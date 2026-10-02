@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarcasm Detection Chatbot</title>
+    <title>StARCASM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="style.css?v=20260727-admin1">
+    <link rel="stylesheet" href="style.css?v=20261002-demo">
 </head>
 <body>
     <main class="app-shell">
         <section class="intro-panel" aria-label="Project overview">
             <div class="intro-topline">
-                <span class="eyebrow">Milestone 2</span>
+                <span class="eyebrow">Research demo</span>
                 <button id="theme-btn" class="icon-btn" type="button" aria-label="Toggle theme">☀</button>
             </div>
-            <h1>Sarcasm Detection Chatbot</h1>
+            <h1>StARCASM</h1>
             <p>Analyze a short headline or message, review the classification, and generate a context-aware reply using Gemini or the local fallback.</p>
 
             <div class="flow-card">
@@ -26,7 +26,7 @@
 
             <div class="calibration-card" aria-label="Confidence scale">
                 <strong>Classification policy</strong>
-                <span>Uses the active model's validated threshold</span>
+                <span>Uses the active model's configured classification threshold</span>
                 <span>Near-threshold results are shown as ambiguous</span>
             </div>
 
@@ -36,12 +36,6 @@
                 <div><small>Saved corrections</small><strong id="feedback-count">0</strong></div>
             </div>
 
-            <div class="sample-panel">
-                <p>Try a sample</p>
-                <button class="sample-btn" data-sample="Oh great, another Monday morning. Exactly what I needed.">Sarcastic message</button>
-                <button class="sample-btn" data-sample="The mayor announced a new public transport plan during Monday's press conference.">News paragraph</button>
-                <button class="sample-btn" data-sample="I really appreciate your help with the project today.">Sincere text</button>
-            </div>
 
             <div class="admin-card">
                 <strong>Model improvement</strong>
@@ -52,12 +46,21 @@
             </div>
         </section>
 
-        <section class="chat-container" aria-label="Sarcasm chatbot">
+        <section class="chat-container" aria-label="StARCASM chat">
             <header class="chat-header">
                 <div class="bot-icon" aria-hidden="true">SB</div>
-                <div class="chat-title"><h2>Sarcasm Bot</h2><p>Model estimates should be read with context.</p></div>
+                <div class="chat-title"><h2>StARCASM</h2><p>Model estimates should be read with context.</p></div>
                 <button id="clear-btn" class="icon-btn" type="button" title="Clear chat">Clear</button>
             </header>
+
+            <div class="demo-toolbar" aria-label="Demo examples">
+                <p>Choose an example, then select <strong>Analyze only</strong>.</p>
+                <div class="demo-examples">
+                    <button type="button" class="sample-btn" data-sample="The meeting starts at nine tomorrow.">Plain statement</button>
+                    <button type="button" class="sample-btn" data-sample="Wonderful, another meeting that could have been an email.">Sarcasm example</button>
+                </div>
+                <p class="research-note">Classifies text. Participant comprehension and rehabilitation benefits require separate evaluation.</p>
+            </div>
 
             <div class="chat-box" id="chat-box" aria-live="polite"></div>
 
@@ -71,6 +74,7 @@
             </div>
         </section>
     </main>
-    <script src="script.js?v=20260727-admin1"></script>
+    <script src="script.js?v=20261002-demo"></script>
 </body>
 </html>
+

@@ -930,3 +930,15 @@ button:disabled {
     background: rgba(244, 63, 94, 0.22) !important;
     transform: none !important;
 }
+
+
+/* Short research demonstration: examples remain beside the conversation. */
+.demo-toolbar { padding: 12px 20px; border-bottom: 1px solid var(--line, #29314a); flex-shrink: 0; }
+.demo-toolbar p { margin: 0 0 8px; font-size: 13px; line-height: 1.45; color: var(--muted, #a6aec5); }
+.demo-examples { display: flex; flex-wrap: wrap; gap: 8px; }
+.demo-examples button { width: auto; margin: 0; padding: 8px 12px; border: 1px solid var(--line, #45405f); border-radius: 9px; background: transparent; color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
+.demo-examples button:hover { background: rgba(139, 92, 246, .16); }
+.demo-examples button:focus-visible { outline: 2px solid #a78bfa; outline-offset: 3px; }
+.demo-toolbar .research-note { margin: 9px 0 0; font-size: 12px; }
+
+@media (max-width: 600px) { .chat-container { height: auto; min-height: 780px; } .chat-box { min-height: 260px; max-height: 55vh; } }
