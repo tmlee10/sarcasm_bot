@@ -52,13 +52,13 @@ def ready():
 def portal():
     other = os.getenv('OTHER_BOT_URL', '').strip()
     valid = urlparse(other)
-    other_name = 'HUMOR Bot' if KIND == 'starcasm' else 'StARCASM'
+    other_name = 'DANG' if KIND == 'starcasm' else 'StARCASM'
     other_link = (f'<a class="button secondary" href="{escape(other, quote=True)}">Open {other_name}</a>'
                   if valid.scheme == 'https' and valid.netloc and not valid.username else '<span>Companion bot link will appear after deployment.</span>')
     return """<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>StARCASM &amp; HUMOR Bot | Research demonstration</title>
+    <title>StARCASM &amp; DANG | Research demonstration</title>
     <style>body{margin:0;background:#f4f7fb;color:#16283e;font:17px/1.6 system-ui,sans-serif}main{max-width:950px;margin:6vh auto;padding:28px}h1{font-size:clamp(32px,5vw,52px);line-height:1.15}h2{font-size:25px}small{letter-spacing:.12em;color:#315883}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin:32px 0}article{background:white;border:1px solid #dbe3eb;border-radius:16px;padding:28px}.button{display:inline-block;padding:11px 20px;border-radius:8px;background:#214e77;color:white;text-decoration:none;margin-top:12px}.secondary{background:#276456}footer{font-size:14px;border-top:1px solid #ccd7e1;padding-top:18px}a:focus{outline:3px solid #e58c24;outline-offset:4px}</style>
-    <main><small>CONVERSATIONAL RESEARCH TOOLS</small><h1>StARCASM &amp; HUMOR Bot</h1><p>Explore how two trained language models classify text and support short conversational exchanges.</p>
+    <main><small>CONVERSATIONAL RESEARCH TOOLS</small><h1>StARCASM &amp; DANG</h1><p>Explore how two trained language models classify text and support short conversational exchanges.</p>
     <div class="grid"><article><h2>""" + TITLE + """</h2><p>Try text analysis, explore the model response, and submit corrections for review.</p><a class="button" href="/bot">Open """ + TITLE + """</a></article>
     <article><h2>""" + other_name + """</h2><p>Open the companion research demonstration.</p>""" + other_link + """</article></div>
     <h2>Before trying the demo</h2><p>A reviewer login is required. Use fictional examples and do not enter names, medical records, or other personal information. Submitted corrections are saved for review. Chat text may be sent to the configured external response provider; classification runs on the hosted model.</p>
@@ -98,3 +98,4 @@ def admin_status():
 
 web.mount('/', legacy.app)
 app = AccessBoundary(web, USERS)
+
