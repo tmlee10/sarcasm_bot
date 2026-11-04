@@ -240,9 +240,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+
+    // input-feedback-v1: make empty submissions visible to keyboard and screen-reader users.
+    const inputFeedback = document.createElement("p");
+    inputFeedback.id = "input-feedback";
+    inputFeedback.setAttribute("role", "alert");
+    inputFeedback.style.fontWeight = "600";
+    inputFeedback.hidden = true;
+    userInput.insertAdjacentElement("afterend", inputFeedback);
+    userInput.setAttribute("aria-describedby", "input-feedback");
+    function clearInputFeedback() {
+        inputFeedback.textContent = "";
+        inputFeedback.hidden = true;
+        userInput.removeAttribute("aria-invalid");
+    }
+    userInput.addEventListener("input", () => {
+        if (userInput.value.trim()) clearInputFeedback();
+    });
     function getText() {
         const text = userInput.value.trim();
-        if (!text) { userInput.focus(); return null; }
+        if (!text) {
+            inputFeedback.textContent = "Enter some text or choose an example, then select Analyze only or Generate reply.";
+            inputFeedback.hidden = false;
+            userInput.setAttribute("aria-invalid", "true");
+            userInput.focus();
+            return null;
+        }
+        clearInputFeedback();
         return text;
     }
 
@@ -260,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 user_explanation: data.explanation,
                 response_source: "Analyze only"
             }, "", { text, label: data.label, score: data.score, source: "analyze" });
-            userInput.value = ""; updateCounter();
+            updateCounter(); // Keep the analyzed text available for Generate reply.
         } catch (error) { removeTyping(); appendMessage(error.message, "bot", null, "error-bubble"); }
         finally { setBusy(false); userInput.focus(); }
     }
