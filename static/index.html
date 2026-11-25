@@ -3,31 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StARCASM</title>
+    <title>StARCASM | Research3</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="https://research3.org/assets/research3-icon.svg">
-    <link rel="stylesheet" href="style.css?v=20261002-demo">
+    <link rel="stylesheet" href="style.css?v=20261125-ui2">
 </head>
 <body>
     <main class="app-shell">
-        <section class="intro-panel" aria-label="Project overview">
+        <section class="intro-panel" aria-label="Project overview and live model inspector">
             <div class="intro-topline">
-                <span class="eyebrow">Research demo</span>
-                <button id="theme-btn" class="icon-btn" type="button" aria-label="Toggle theme">☀</button>
+                <div class="topline-left">
+                    <span class="eyebrow">Research demo</span>
+                    <a id="research3-home" class="research3-link" href="https://research3.org/" aria-label="Back to Research3 home">
+                        <img class="r3-icon" src="https://research3.org/assets/research3-icon.svg" alt="" width="18" height="18">
+                        <span>Research3</span>
+                    </a>
+                </div>
+                <button id="theme-btn" class="icon-btn" type="button" aria-label="Toggle theme" title="Toggle theme">☀</button>
             </div>
+
             <h1>StARCASM</h1>
-            <p>Analyze a short headline or message, review the classification, and generate a context-aware reply using Gemini or the local fallback.</p>
+            <p class="intro-desc">Analyze a short headline or message, inspect where it lands on the sarcasm spectrum, and generate a context-aware reply using Gemini or the local fallback.</p>
 
-            <div class="flow-card">
-                <span>User Text</span><strong>→</strong><span>Sarcasm Classifier</span><strong>→</strong><span>Gemini / Fallback</span><strong>→</strong><span>Reply Score</span>
+            <div class="inspector-card" aria-label="Live sarcasm spectrum inspector">
+                <div class="inspector-head">
+                    <span class="inspector-kicker">Decision Spectrum</span>
+                    <span id="live-verdict" class="verdict-chip">Awaiting input</span>
+                </div>
+
+                <div class="spectrum-wrap">
+                    <div class="spectrum-bar">
+                        <div class="spectrum-ambiguous-band" hidden title="Near-threshold ambiguous zone"></div>
+                        <div id="spectrum-marker" class="spectrum-marker" aria-hidden="true"></div>
+                    </div>
+                    <div class="spectrum-scale">
+                        <span>0%</span>
+                        <span id="spectrum-caption">Sarcasm score</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+
+                <div class="session-stats" aria-label="Session classification totals for inputs with sufficient context">
+                    <div class="stat-box"><small>Literal</small><strong id="stat-literal">0</strong></div>
+                    <div class="stat-box"><small>Ambiguous</small><strong id="stat-ambiguous">0</strong></div>
+                    <div class="stat-box"><small>Sarcastic</small><strong id="stat-sarcastic">0</strong></div>
+                </div>
             </div>
 
-            <div class="calibration-card" aria-label="Confidence scale">
-                <strong>Classification policy</strong>
-                <span>Uses the active model's configured classification threshold</span>
-                <span>Near-threshold results are shown as ambiguous</span>
+            <div class="flow-card" aria-label="Processing pipeline">
+                <div id="pipe-1" class="flow-step"><span class="flow-num">01</span>User Text</div>
+                <div id="pipe-2" class="flow-step"><span class="flow-num">02</span>Sarcasm Classifier</div>
+                <div id="pipe-3" class="flow-step"><span class="flow-num">03</span>Gemini / Fallback</div>
+                <div id="pipe-4" class="flow-step"><span class="flow-num">04</span>Reply Score</div>
             </div>
 
             <div class="status-card">
@@ -36,28 +65,38 @@
                 <div><small>Saved corrections</small><strong id="feedback-count">0</strong></div>
             </div>
 
-
-            <div class="admin-card">
-                <strong>Model improvement</strong>
-                <p>Incorrect results can be saved for controlled batch retraining.</p>
-                <a class="admin-link" href="/admin.html">Open training administration</a>
-                <button id="retrain-btn" class="secondary-btn" type="button">Retrain candidate model</button>
-                <small id="retrain-status">Retraining is available in the development build.</small>
-            </div>
+            <details class="admin-details">
+                <summary>Model improvement &amp; policy</summary>
+                <div class="admin-body">
+                    <p>Uses the active model's configured classification threshold; near-threshold results are shown as ambiguous. Incorrect results can be saved for controlled batch retraining.</p>
+                    <div id="review-controls" hidden>
+                        <a class="admin-link" href="/admin">Open training administration ↗</a>
+                        <button id="retrain-btn" class="secondary-btn" type="button" disabled>Retrain candidate model</button>
+                        <small id="retrain-status">Checking retraining availability.</small>
+                    </div>
+                </div>
+            </details>
         </section>
 
         <section class="chat-container" aria-label="StARCASM chat">
             <header class="chat-header">
-                <div class="bot-icon" aria-hidden="true">SB</div>
-                <div class="chat-title"><h2>StARCASM</h2><p>Model estimates should be read with context.</p></div>
+                <div class="chat-header-left">
+                    <div class="bot-icon" aria-hidden="true">SB</div>
+                    <div class="chat-title">
+                        <h2>StARCASM</h2>
+                        <p>Model estimates should be read with context.</p>
+                    </div>
+                </div>
                 <button id="clear-btn" class="icon-btn" type="button" title="Clear chat">Clear</button>
             </header>
 
-            <nav aria-label="Research3 navigation"><a id="research3-home" href="https://research3.org/" aria-label="Back to Research3 home" style="display:block;position:relative;overflow:hidden;width:min(100%, 168px);aspect-ratio:760 / 232;margin:6px 0;border-radius:6px;background:#fff"><img src="https://research3.org/assets/research3-logo.png" alt="Research3" width="1024" height="572" style="position:absolute;width:134.736842%;max-width:none;height:auto;left:-17.5%;top:-71.12069%"></a></nav><div class="demo-toolbar" aria-label="Demo examples">
-                <p>Choose an example, then select <strong>Analyze only</strong>.</p>
+            <div class="demo-toolbar" aria-label="Demo examples">
                 <div class="demo-examples">
+                    <span class="demo-label">Try:</span>
                     <button type="button" class="sample-btn" data-sample="The meeting starts at nine tomorrow.">Plain statement</button>
                     <button type="button" class="sample-btn" data-sample="Wonderful, another meeting that could have been an email.">Sarcasm example</button>
+                    <button type="button" class="sample-btn" data-sample="Sure, fine.">Ambiguous / short</button>
+                    <button type="button" class="sample-btn" data-sample="Nothing says relaxing weekend like fixing a broken printer.">Deadpan irony</button>
                 </div>
                 <p class="research-note">Classifies text. Participant comprehension and rehabilitation benefits require separate evaluation.</p>
             </div>
@@ -65,8 +104,11 @@
             <div class="chat-box" id="chat-box" aria-live="polite"></div>
 
             <div class="input-area">
-                <textarea id="user-input" rows="3" maxlength="8000" placeholder="Paste a short headline or message..."></textarea>
-                <div class="input-meta"><span id="input-help">Enter sends · Shift+Enter adds a line</span><span id="char-count">0 / 8000</span></div>
+                <textarea id="user-input" rows="2" maxlength="8000" placeholder="Paste a short headline or message..."></textarea>
+                <div class="input-meta">
+                    <span id="input-help">Enter sends · Shift+Enter adds a line</span>
+                    <span id="char-count">0 / 8000</span>
+                </div>
                 <div class="button-row">
                     <button id="analyze-btn" type="button" class="secondary-btn">Analyze only</button>
                     <button id="send-btn" type="button">Generate</button>
@@ -74,7 +116,6 @@
             </div>
         </section>
     </main>
-    <script src="script.js?v=20261002-demo"></script>
+    <script src="script.js?v=20261125-ui2"></script>
 </body>
 </html>
-
